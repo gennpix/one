@@ -1,0 +1,8 @@
+apiVersion: v2
+engine: gotpl
+name: elasticsearch
+description: elasticsearch
+icon: https://d1q6f0aelx0por.cloudfront.net/product-logos/library-elasticsearch-logo.png
+type: application
+version: 7.10.1
+appVersion: 7.10.1

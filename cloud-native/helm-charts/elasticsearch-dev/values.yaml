@@ -1,0 +1,35 @@
+# *副本数
+replicaCount: 1
+# *镜像
+image:
+  # 镜像仓库
+  registry: "hub.docker.com"
+  # *镜像名称，此处不要写tag，渲染时会使用Chart.yaml中的appVersion
+  repository: elasticsearch
+  # *拉取镜像策略： Always - 总是拉取， IfNotPresent - 不存在则拉取
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 9200
+
+ingress:
+  enabled: false
+
+# 部署节点控制
+nodeSelector: {}
+
+# configMap配置
+volumes:
+  - name: es-data
+    persistentVolumeClaim:
+      claimName: es-data
+
+# 挂载卷配置
+volumeMounts:
+  - mountPath: /usr/share/elasticsearch/data
+    name: es-data
+
+env:
+  - name: discovery.type
+    value: single-node

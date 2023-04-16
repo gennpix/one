@@ -1,0 +1,5 @@
+secret:
+  name: messagecenter-service
+  data:
+    dbuser: root
+    dbpass: Qloud@dev?666
