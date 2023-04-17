@@ -8,6 +8,10 @@
 "go.gopath": "/Users/xin/GOPATH",
 ```
 
+```python
+"python.formatting.provider": "black",
+```
+
 ## launch.json
 
 ### 执行单个文件

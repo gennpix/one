@@ -1,0 +1,47 @@
+# 插件版本, 用于定义插件包的版本, 做版本管理使用
+version: '0.1'
+
+# 作者
+author: "xin"
+
+# 插件ID
+id: git-branches-merge
+
+# 插件中文名称
+name: 批量分支合并插件
+
+# 插件描述
+description: 批量分支合并插件
+
+# 插件分类
+category: scm
+
+# 声明插件使用的参数
+variables:
+  - name: subsystem
+    type: text
+    label: 子系统名称*
+    help: 请输入子系统名称
+    required: true
+  - name: dest_branch
+    type: text
+    label: 目标分支*
+    help: 请输入目标分支
+  - name: branches
+    type: text
+    label: 分支列表*
+    help: 请输入分支列表，以英文逗号(,)分隔
+  - name: pre_merge_branch
+    type: text
+    label: 预合并分支/管理分支
+    help: 合并时，先合并该分支到目标分支
+
+# 执行入口配置, 声明如何运行插件脚本
+entry:
+  # 插件执行依赖
+  install:
+    - echo "do nothing"
+
+  # 插件启动入口
+  # 执行时会把 variables 中的 label 展开，因此完整的命令行是  $QCI_PLUGIN_RUNTIME/run.sh --name XXXX --greedings XXX， 如不希望展开 label，可详见格式申明中，variables 的 resolve 配置
+  start: python3 $QCI_PLUGIN_RUNTIME/main.py $subsystem $dest_branch $branches $pre_merge_branch
