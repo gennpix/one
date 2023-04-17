@@ -1,0 +1,94 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: app-alpha
+  namespace: apm
+  labels:
+    app: app-alpha
+  annotations:
+    deployment.kubernetes.io/revision: "49"
+    kubesphere.io/creator: liuyu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-alpha
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: app-alpha
+      annotations:
+        kubesphere.io/containerSecrets: '{"container-ogerv7":"harbor"}'
+        kubesphere.io/restartedAt: "2021-03-15T09:46:11.154Z"
+        logging.kubesphere.io/logsidecar-config: "{}"
+    spec:
+      volumes:
+        # 配置sidecar挂载卷
+        - name: sidecar
+          emptyDir: {}
+      # sidecar容器配置
+      initContainers:
+        - name: sidecar
+          # sidecar镜像
+          image: "reg.csftgroup.com/test/skywalking-base:8.1.0-es7-1.0"
+          # sidecar启动后执行的命令
+          command:
+            - cp
+            - "-r"
+            - /skywalking/agent
+            - /sidecar
+          # sidecar资源限制
+          resources: {}
+          # sidecar挂载点配置
+          volumeMounts:
+            - name: sidecar
+              # sidecar挂载路径
+              mountPath: /sidecar
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          # sidecar 镜像拉取策略
+          imagePullPolicy: IfNotPresent
+      containers:
+        - name: container-ogerv7
+          image: reg.csftgroup.com/test/app_alpha
+          command:
+            - java
+          args:
+            - "-javaagent:/sidecar/agent/skywalking-agent.jar"
+            - "-jar"
+            - app_alpha.jar
+          ports:
+            - name: tcp-8080
+              containerPort: 8080
+              protocol: TCP
+          env:
+            - name: SW_AGENT_NAME
+              value: app-alpha
+            - name: SW_AGENT_COLLECTOR_BACKEND_SERVICES
+              value: "skywalking-oap.apm.svc:11800"
+          resources: {}
+          volumeMounts:
+            - name: sidecar
+              # sidecar挂载路径
+              mountPath: /sidecar
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      serviceAccountName: default
+      serviceAccount: default
+      securityContext: {}
+      imagePullSecrets:
+        - name: harbor
+      affinity: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600

@@ -36,3 +36,16 @@ helm uninstall -n ns my-app # 卸载
 ## 参考资料
 
 - [https://github.com/helm/helm](https://github.com/helm/helm)
+
+
+## 模板渲染
+
+```shell
+# template: locally render templates
+helm template xxx
+
+# --dry-run: simulate an install
+# --debug: enable verbose output
+helm install xxx --dry-run --debug
+helm upgrade xxx --dry-run --debug
+```
