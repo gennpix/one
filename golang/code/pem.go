@@ -1,10 +1,12 @@
+// 测试证书，无需理会
 package main
+
 // import (
 // 	"encoding/pem"
 // )
 import "fmt"
-// import "os"
 
+// import "os"
 
 func main() {
 	var key = `-----BEGIN PRIVATE KEY-----
@@ -35,8 +37,8 @@ Kf3dVGqHNZZQOydSSn0I3TSiTTIO1ODZJiGMBBch/UFdDa11Pbstk0b+dePQAqbX
 qVj3f4doyPe+/Rk1DJHlEiCuWyMGDHWecnzaNX3cRxvPQ5Vx21CiWjRiD9G3itWN
 KYiB+KYDS5BuNmuUduNsrbA=
 -----END PRIVATE KEY-----`
-	fmt.Printf("%q",key)
-	var pubkey=`-----BEGIN CERTIFICATE-----
+	fmt.Printf("%q", key)
+	var pubkey = `-----BEGIN CERTIFICATE-----
 MIIFVjCCBD6gAwIBAgISAyCTlNGvYzXX3/N1M5FuJjBCMA0GCSqGSIb3DQEBCwUA
 MEoxCzAJBgNVBAYTAlVTMRYwFAYDVQQKEw1MZXQncyBFbmNyeXB0MSMwIQYDVQQD
 ExpMZXQncyBFbmNyeXB0IEF1dGhvcml0eSBYMzAeFw0yMDA4MTcwMTU2MzFaFw0y
@@ -95,7 +97,7 @@ PfZ+G6Z6h7mjem0Y+iWlkYcV4PIWL1iwBi8saCbGS5jN2p8M+X+Q7UNKEkROb3N6
 KOqkqm57TH2H3eDJAkSnh6/DNFu0Qg==
 -----END CERTIFICATE-----`
 	println("\n")
-	fmt.Printf("%q",pubkey)
+	fmt.Printf("%q", pubkey)
 	// a, b := pem.Decode(publicKey)
 	// println(a)
 	// println(b)
