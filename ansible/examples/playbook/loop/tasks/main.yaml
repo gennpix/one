@@ -1,0 +1,15 @@
+- name: list for loop
+  shell: " echo '{{ item }}'"
+  loop: "{{ list_for_loop }}"
+
+- name: list for loop none
+  shell: " echo '{{ item }}'"
+  loop: "{{ list_for_loop_none if list_for_loop_none is iterable and list_for_loop_none is not string else [] }}"
+
+- name: dict dict testing
+  shell: "echo 'cp -r {{ item.src }} {{ item.dst }}'"
+  loop: "{{ dict_list_for_test }}"
+
+- name: dict dict testing 2
+  shell: "echo 'cp -r {{ item.src }} {{ item.dst }}'"
+  loop: "{{ dict_list_for_test_none if dict_list_for_test_none is iterable and dict_list_for_test_none is not string else [] }}"

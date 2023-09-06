@@ -1,0 +1,12 @@
+list_for_loop:
+  - a
+  - b
+  - c
+list_for_loop_none:
+
+dict_list_for_test:
+  - src: /src/path/a
+    dst: /tmp
+  - src: /src/path/b
+    dst: /dst/path
+dict_list_for_test_none:
