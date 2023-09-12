@@ -1,0 +1,77 @@
+ungrouped:
+  hosts:
+    mail.example.com:
+
+webservers:
+  hosts:
+    foo.example.com:
+    bar.example.com:
+
+dbservers:
+  hosts:
+    one.example.com:
+    two.example.com:
+      ansible_connection: local
+    three.example.com:
+      ansible_port: 8001  # host vars
+      ansible_user: ansible
+      ansible_connection: ssh
+  vars:  # group vars
+    ansible_python_interpreter: /usr/bin/python3
+
+east:
+  hosts:
+    foo.example.com:  # one host in multiple group
+    one.example.com:
+    two.example.com:
+
+west:
+  hosts:
+    bar.example.com:  # inheriting group variables 
+    three.example.com:
+      timeout: 300  # override group vars
+
+batches:
+  hosts:
+    www[01:50].example.com:
+    www[01:50:2].example.com:
+    db-[a:f].example.com: 
+
+prod:
+  hosts:
+    foo.example.com:
+    one.example.com:
+    two.example.com:
+
+# child group
+test:
+  children:
+    west:
+  vars:  # group vars
+    timeout: 500
+
+# alias: host is value of ansible_host
+aliashosts:
+  hosts:
+    my_host:
+      ansible_host=127.0.0.1
+  vars:  # group vars
+    ntp_server: ntp.atlanta.example.com
+    proxy: proxy.atlanta.example.com
+
+all_regions:
+  children:  # multiple children
+    west:
+    east:
+
+a_group:
+  hosts:
+    five.example.com:
+  vars:
+    testvar: a
+    ansible_group_priority: 10
+b_group:
+  hosts:
+    five.example.com:
+  vars:
+    testvar: b

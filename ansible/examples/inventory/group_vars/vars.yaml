@@ -1,0 +1,5 @@
+---
+db_password: {{ vault_db_password }}
+# 创建vault文件：ansible-vault create vault，需要输入密码
+# vault_db_password: xxxxxx
+# 修改：ansible-vault edit vault
